@@ -33,10 +33,6 @@ object alquimista {
   	return self.calidadPromedioDeSusItems() > 50 and self.todosSusItemsDeCombateSonEfectivos() and self.esBuenExplorador()
   }
   
-  method  todosSusItemsDeCombateSonEfectivos(){
-  	return itemsDeCombate.all({itemDeCombate => itemDeCombate.esEfectivo()})
-  }
-  
   method calidadPromedioDeSusItems(){
   	return self.calidadDeItems() / self.cantidadDeItems()
   }
@@ -57,6 +53,10 @@ object alquimista {
   	return itemsDeRecoleccion.sum({calidadDeItem => calidadDeItem.calidad()})
   }
   
+  method  todosSusItemsDeCombateSonEfectivos(){
+  	return itemsDeCombate.all({itemDeCombate => itemDeCombate.esEfectivo()})
+  }
+  
   method agregarItemDeCombate(item){
   	itemsDeCombate.add(item)
   }
@@ -66,6 +66,7 @@ object alquimista {
   }
 }
 
+
 object bomba {
   
   var materiales = []
@@ -74,14 +75,16 @@ object bomba {
   method esEfectivo() {
     return danio > 100 
   }
-   method cambiarDanio(nuevoDanio){
+  
+  method cambiarDanio(nuevoDanio){
    	danio = nuevoDanio
-   }
+  }
+  
   method capacidad(){
   	return danio/2
   }
  
- method calidad(){
+  method calidad(){
  	return materiales.min({material => material.calidad()}).calidad()
   }
   
@@ -100,9 +103,7 @@ object pocion {
   }
   
   method fueCreadaConAlgunMaterialMistico() {
-    return materiales.any({ material =>
-      material.esMistico()
-    })
+    return materiales.any({ material => material.esMistico()})
   }
   
   method capacidad(){
@@ -118,23 +119,10 @@ object pocion {
   }
   
   method primerMaterialMisticoOno(){
-  	return materiales.findOrElse({material => material.esMistico()}, {materiales.first()})
-  	
+  	return materiales.findOrElse({material => material.esMistico()}, {materiales.first()})	
   }
   
-  method calidadDelPrimerMaterialMistico(){
-  	return self.materialesMisticos().first()
-  }
-  
-  method materialesMisticos(){
-  	return materiales.filter({material => material.esMistico()})
-  }
-  
-  method calidadDelPrimerMaterial(){
-  	return materiales.first()
-  }
-  
-    method agregarMateriales(material){
+  method agregarMateriales(material){
   	materiales.add(material)
   }
 }
@@ -149,9 +137,7 @@ object debilitador {
   }
   
   method fueCreadoPorAlgunMaterialMistico() {
-    return materiales.any({ material =>
-      material.esMistico()
-    })
+    return materiales.any({ material =>material.esMistico()})
   }
   
   method calidad(){
@@ -180,7 +166,7 @@ object debilitador {
    	}else{
    		return 5
  	 }
-	}
+  }
 	
 	method agregarMateriales(material){
   	materiales.add(material)
@@ -188,6 +174,7 @@ object debilitador {
 }
 
 object itemDeRecoleccion {
+	
 	var materiales = []
 	
 	method calidad(){
@@ -200,12 +187,12 @@ object itemDeRecoleccion {
 	
 	method agregarMateriales(material){
   	materiales.add(material)
-  }
+    }
 }
 
 
 
-object materialMistico{
+object materialMistico {
 	
 	var calidad=0
 	method esMistico(){
@@ -218,8 +205,7 @@ object materialMistico{
 	
 	method cambiarCalidad(unaCalidad){
 		calidad = unaCalidad
-	}
-	
+	}	
 }
 
 object materialNoMistico{

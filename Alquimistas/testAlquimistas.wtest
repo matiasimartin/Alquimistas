@@ -70,7 +70,67 @@ describe "Test de Alquimistas"{
 		assert.equals(202, alquimista.capacidadOfensiva())
 	}
 	
+	test "Calidad promedio de Items"{
+		
+		materialMistico.cambiarCalidad(200)
+		materialNoMistico.cambiarCalidad(80)
+		pocion.agregarMateriales(materialMistico) //calidad pocion 200
+		bomba.agregarMateriales(materialNoMistico)//calidad bomba 80
+		itemDeRecoleccion.agregarMateriales(materialMistico)// calidad 30+200/10=50
+		alquimista.agregarItemDeCombate(pocion)
+		alquimista.agregarItemDeCombate(bomba)
+		alquimista.agregarItemDeRecoleccion(itemDeRecoleccion)
+		
+		assert.equals (110, alquimista.calidadPromedioDeSusItems())// (200+80+50)/3=110
+	}
+	
+	test "Alquimista es profesional"{
+		
+		materialMistico.cambiarCalidad(200)
+		pocion.agregarMateriales(materialMistico)
+		materialNoMistico.cambiarCalidad(100)
+		bomba.agregarMateriales(materialNoMistico)
+		bomba.cambiarDanio(200)
+		alquimista.agregarItemDeCombate(pocion)
+		alquimista.agregarItemDeCombate(bomba)
+		alquimista.agregarItemDeRecoleccion(itemDeRecoleccion)
+		alquimista.agregarItemDeRecoleccion(itemDeRecoleccion)
+		alquimista.agregarItemDeRecoleccion(itemDeRecoleccion)
+		
+		assert.that(alquimista.esProfesional())
+	}
+	
+	test "Alquimista no es profesional porque bomba no es efectiva"{
+		
+		materialMistico.cambiarCalidad(200)
+		pocion.agregarMateriales(materialMistico)
+		materialNoMistico.cambiarCalidad(100)
+		bomba.agregarMateriales(materialNoMistico)
+		bomba.cambiarDanio(50)
+		alquimista.agregarItemDeCombate(pocion)
+		alquimista.agregarItemDeCombate(bomba)
+		alquimista.agregarItemDeRecoleccion(itemDeRecoleccion)
+		alquimista.agregarItemDeRecoleccion(itemDeRecoleccion)
+		alquimista.agregarItemDeRecoleccion(itemDeRecoleccion)
 
+		assert.notThat(alquimista.esProfesional())
+	}
+	
+	test "Alquimista no es profesional porque el promedio no llega a 50"{
+		
+		materialMistico.cambiarCalidad(10)
+		pocion.agregarMateriales(materialMistico)
+		materialNoMistico.cambiarCalidad(15)
+		bomba.agregarMateriales(materialNoMistico)
+		bomba.cambiarDanio(200)
+		alquimista.agregarItemDeCombate(pocion)
+		alquimista.agregarItemDeCombate(bomba)
+		alquimista.agregarItemDeRecoleccion(itemDeRecoleccion)
+		alquimista.agregarItemDeRecoleccion(itemDeRecoleccion)
+		alquimista.agregarItemDeRecoleccion(itemDeRecoleccion)
+
+		assert.notThat(alquimista.esProfesional())
+	}
 	
 
 }
