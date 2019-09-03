@@ -6,12 +6,40 @@ describe "Test de Alquimistas"{
 		assert.that (alquimista.tieneCriterio())
 	}
 	
-	test "Criterio de alquimista con menos de la mitad de items efectivos"{
+	test "Alquimista no tiene criterio con menos de la mitad de items efectivos"{
 		alquimista.agregarItemDeCombate(bomba)
 		alquimista.agregarItemDeCombate(pocion)
 		alquimista.agregarItemDeCombate(bomba)
 		pocion.agregarMateriales(florRoja)
 		assert.notThat (alquimista.tieneCriterio())
 		
+	}
+	
+	test "Alquimista tiene criterio con mas de la mitad de items efectivos"{
+		pocion.agregarMateriales(florRoja)
+		debilitador.agregarMateriales(polvora)
+		alquimista.agregarItemDeCombate(pocion)
+		alquimista.agregarItemDeCombate(pocion)
+		alquimista.agregarItemDeCombate(debilitador)
+		assert.that(alquimista.tieneCriterio())
+	}
+	
+	test "Alquimista no es buen explorador sin ningun item de recoleccion"{
+		assert.notThat(alquimista.esBuenExplorador())
+	}
+	
+	test "Alquimista es buen explorador con tres items de recoleccion"{
+		alquimista.agregarItemDeRecoleccion(itemDeRecoleccion)
+		alquimista.agregarItemDeRecoleccion(itemDeRecoleccion)
+		alquimista.agregarItemDeRecoleccion(itemDeRecoleccion)
+		assert.that(alquimista.esBuenExplorador())
+	}
+	
+	test "Alquimista es buen explorador con mas de tres items de recoleccion"{
+		alquimista.agregarItemDeRecoleccion(itemDeRecoleccion)
+		alquimista.agregarItemDeRecoleccion(itemDeRecoleccion)
+		alquimista.agregarItemDeRecoleccion(itemDeRecoleccion)
+		alquimista.agregarItemDeRecoleccion(itemDeRecoleccion)
+		assert.that(alquimista.esBuenExplorador())
 	}
 }
