@@ -1,0 +1,17 @@
+import alquimistas.*
+
+describe "Test de Alquimistas"{
+	
+	test "Criterio de alquimista sin poseer ningun item de combate"{
+		assert.that (alquimista.tieneCriterio())
+	}
+	
+	test "Criterio de alquimista con menos de la mitad de items efectivos"{
+		alquimista.agregarItemDeCombate(bomba)
+		alquimista.agregarItemDeCombate(pocion)
+		alquimista.agregarItemDeCombate(bomba)
+		pocion.agregarMateriales(florRoja)
+		assert.notThat (alquimista.tieneCriterio())
+		
+	}
+}
