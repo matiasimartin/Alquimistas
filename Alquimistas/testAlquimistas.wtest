@@ -3,43 +3,74 @@ import alquimistas.*
 describe "Test de Alquimistas"{
 	
 	test "Criterio de alquimista sin poseer ningun item de combate"{
+		
 		assert.that (alquimista.tieneCriterio())
 	}
 	
 	test "Alquimista no tiene criterio con menos de la mitad de items efectivos"{
+		
 		alquimista.agregarItemDeCombate(bomba)
 		alquimista.agregarItemDeCombate(pocion)
 		alquimista.agregarItemDeCombate(bomba)
-		pocion.agregarMateriales(florRoja)
+		pocion.agregarMateriales(materialMistico)
+		
 		assert.notThat (alquimista.tieneCriterio())
 		
 	}
 	
 	test "Alquimista tiene criterio con mas de la mitad de items efectivos"{
-		pocion.agregarMateriales(florRoja)
-		debilitador.agregarMateriales(polvora)
+		
+		pocion.agregarMateriales(materialMistico)
+		debilitador.agregarMateriales(materialNoMistico)
 		alquimista.agregarItemDeCombate(pocion)
 		alquimista.agregarItemDeCombate(pocion)
 		alquimista.agregarItemDeCombate(debilitador)
+		
 		assert.that(alquimista.tieneCriterio())
 	}
 	
 	test "Alquimista no es buen explorador sin ningun item de recoleccion"{
+		
 		assert.notThat(alquimista.esBuenExplorador())
 	}
 	
 	test "Alquimista es buen explorador con tres items de recoleccion"{
+		
 		alquimista.agregarItemDeRecoleccion(itemDeRecoleccion)
 		alquimista.agregarItemDeRecoleccion(itemDeRecoleccion)
 		alquimista.agregarItemDeRecoleccion(itemDeRecoleccion)
+		
 		assert.that(alquimista.esBuenExplorador())
 	}
 	
 	test "Alquimista es buen explorador con mas de tres items de recoleccion"{
+		
 		alquimista.agregarItemDeRecoleccion(itemDeRecoleccion)
 		alquimista.agregarItemDeRecoleccion(itemDeRecoleccion)
 		alquimista.agregarItemDeRecoleccion(itemDeRecoleccion)
 		alquimista.agregarItemDeRecoleccion(itemDeRecoleccion)
+		
 		assert.that(alquimista.esBuenExplorador())
 	}
+	
+	test "Capacidad de Alquimista sin ningun item de combate"{
+		assert.equals(0, alquimista.capacidadOfensiva())
+	}
+	
+	test "Capacidad ofensiva de Alquimista con los tres items de Combate"{ 
+		
+		bomba.cambiarDanio(200)
+		alquimista.agregarItemDeCombate(bomba)
+		pocion.agregarMateriales(materialMistico)
+		pocion.agregarMateriales(materialMistico)
+		alquimista.agregarItemDeCombate(pocion)
+		debilitador.agregarMateriales(materialMistico)
+		alquimista.agregarItemDeCombate(debilitador)
+		
+		assert.equals(202, alquimista.capacidadOfensiva())
+	}
+	
+
+	
+
 }

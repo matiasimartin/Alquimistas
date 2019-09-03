@@ -25,11 +25,11 @@ object alquimista {
   	return itemsDeRecoleccion.size()
   }
   
-  method capacidadOfensiva(){	/* _4_ */
+  method capacidadOfensiva(){	/* _3_ */
   	return itemsDeCombate.sum({capacidadDeItem => capacidadDeItem.capacidad()})
   }
   
-  method esProfesional(){	/* _3_ */
+  method esProfesional(){	/* _4_ */
   	return self.calidadPromedioDeSusItems() > 50 and self.todosSusItemsDeCombateSonEfectivos() and self.esBuenExplorador()
   }
   
@@ -38,7 +38,7 @@ object alquimista {
   }
   
   method calidadPromedioDeSusItems(){
-  	return self.calidadDeItems()/self.cantidadDeItems()
+  	return self.calidadDeItems() / self.cantidadDeItems()
   }
   
   method cantidadDeItems(){
@@ -54,7 +54,7 @@ object alquimista {
   }
   
   method calidadDeItemsDeRecoleccion(){
-  	return itemsDeCombate.sum({calidadDeItem => calidadDeItem.calidad()})
+  	return itemsDeRecoleccion.sum({calidadDeItem => calidadDeItem.calidad()})
   }
   
   method agregarItemDeCombate(item){
@@ -69,18 +69,20 @@ object alquimista {
 object bomba {
   
   var materiales = []
-  var danio = 15
+  var danio = 0
   
   method esEfectivo() {
-    return danio > 100
+    return danio > 100 
   }
-  
+   method cambiarDanio(nuevoDanio){
+   	danio = nuevoDanio
+   }
   method capacidad(){
   	return danio/2
   }
  
  method calidad(){
- 	return materiales.min({material => material.calidad()})
+ 	return materiales.min({material => material.calidad()}).calidad()
   }
   
   method agregarMateriales(material){
@@ -203,10 +205,9 @@ object itemDeRecoleccion {
 
 
 
-object florRoja{
+object materialMistico{
 	
-	var calidad =20
-	
+	var calidad=0
 	method esMistico(){
 		return true
 	}
@@ -215,26 +216,15 @@ object florRoja{
 		return calidad
 	}
 	
+	method cambiarCalidad(unaCalidad){
+		calidad = unaCalidad
+	}
 	
 }
 
-object unUni{
+object materialNoMistico{
 	
-	var calidad =50
-	
-	method esMistico(){
-		return true
-	}
-	
-	method calidad(){
-		return calidad
-	}
-}
-
-object polvora{
-	
-	var calidad =15
-	
+	var calidad=0
 	method esMistico(){
 		return false
 	}
@@ -242,4 +232,9 @@ object polvora{
 	method calidad(){
 		return calidad
 	}
+	
+	method cambiarCalidad(unaCalidad){
+		calidad = unaCalidad
+	}
 }
+
