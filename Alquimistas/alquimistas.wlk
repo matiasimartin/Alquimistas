@@ -93,6 +93,7 @@ object bomba {
   }
 }
 
+
 object pocion {
 	
   var materiales = []
@@ -126,6 +127,7 @@ object pocion {
   	materiales.add(material)
   }
 }
+
 
 object debilitador {
 	
@@ -189,7 +191,6 @@ object itemDeRecoleccion {
   	materiales.add(material)
     }
 }
-
 
 
 object materialMistico {
